@@ -39,23 +39,30 @@ $(document).ready(function(){
 
         $("form").submit(function(e){
             e.preventDefault();
-
-            
             console.log('to update');
             console.log($("#postID").val());
-            //simulate put ajax request
-             $.ajax({
-                url:"http://localhost:62009/api/posts/"+postId,
-                method: 'PUT',
-                data:{
-                    "PostContent": $("#postID").val(),
-                    "CreatedAt":date,
-                    "CreatedBy":cookieVal.username
-                },
-                success: function(res) {
-                    alert('updated');
-                }
-            });
+            if($("#postID").val()!="")
+            {
+                //simulate put ajax request
+                $.ajax({
+                    url:"http://localhost:62009/api/posts/"+postId,
+                    method: 'PUT',
+                    data:{
+                        "PostContent": $("#postID").val(),
+                        "CreatedAt":date,
+                        "CreatedBy":cookieVal.username
+                    },
+                    success: function(res) {
+                        alert('updated');
+                    }
+                });
+            }
+            else
+            {
+                alert("post can not be empty ");
+            }
+            
+            
         });
 
 });

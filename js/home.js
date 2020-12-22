@@ -11,9 +11,6 @@ $(document).ready(function(){
         $.ajax({
             url:"http://localhost:62009/api/posts",
             method: 'GET',
-            /* data:{
-                Username:cookieVal.username
-            }, */
             success: function(data){
                let posts= "";
                console.log(data);
@@ -38,7 +35,7 @@ $(document).ready(function(){
                         posts+=`<tr>
                                     <td>
                                         <a href="http://localhost/atp2finaltermassignment/views/editpost.html?id=`+data[i].PostID+`">Edit Post</a> |
-                                        <a href="#">Delete Post</a>
+                                        <a href="http://localhost/atp2finaltermassignment/views/deletepost.html?id=`+data[i].PostID+`">Delete Post</a>
                                     </td>
                                 </tr>
                                 `;
@@ -46,12 +43,11 @@ $(document).ready(function(){
 
                    for(j=0;j<data[i].Comments.length;j++)
                    {
-                       //<td><input type="text" readonly class="`+data[i].Comments[j].PostID+`" value="`+data[i].Comments[j].CommentContent+`">
                        posts+=`<tr>
                                   <td><span style="color:blue;">`+data[i].Comments[j].CreatedBy+":-- </span>"+data[i].Comments[j].CommentContent+`</td> `;
                         if(data[i].Comments[j].CreatedBy==cookieVal.username)
                         {
-                            posts+=`<td><a href="#">Edit Comment </a> | <a href="#">Delete Comment </a></tr>`;
+                            posts+=`<td><a href="http://localhost/atp2finaltermassignment/views/editcomment.html?commentId=`+data[i].Comments[j].CommentID+`&postId=`+data[i].PostID+`">Edit Comment </a> | <a href="http://localhost/atp2finaltermassignment/views/deletecomment.html?commentId=`+data[i].Comments[j].CommentID+`&postId=`+data[i].PostID+`"">Delete Comment </a></tr>`;
                         }
                         
                    }
@@ -79,8 +75,11 @@ $(document).ready(function(){
 
         $('.submitComment').bind("enterKey",function(e){
             //do stuff here
+
+            if($("#"+this.id).val()!=""){
+            console.log("http://localhost:62009/api/posts/"+this.id+"/comments");
             $.ajax({
-                url:"http://localhost:62009/api/comments",
+                url:"http://localhost:62009/api/posts/"+this.id+"/comments",
                 method: 'POST',
                 data:{
                     "CommentContent":$("#"+this.id).val(),
@@ -92,7 +91,13 @@ $(document).ready(function(){
                     console.log('comment inserted');
                 }
             });
-            window.location.href = "http://localhost/atp2finaltermassignment/views/home.html";
+            
+                window.location.href = "http://localhost/atp2finaltermassignment/views/home.html";
+            }
+            else
+            {
+                alert("can not insert empty comment");
+            }
          });
          $('.submitComment').keyup(function(e){
              if(e.keyCode == 13)
