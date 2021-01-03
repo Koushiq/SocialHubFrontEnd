@@ -2,12 +2,17 @@ let date = new Date().toISOString().
   replace(/T/, ' ').      
   replace(/\..+/, '') ;
 
-  const cookieVal=JSON.parse(document.cookie);
+var cookieVal=getCookie();
+console.log(cookieVal);
+if(cookieVal=="")
+{
+    console.log("here");
+    window.location.href = "http://localhost/atp2finaltermassignment/views/index.html";
+}
+
 $(document).ready(function(){
-    if(document.cookie!="")
-    {
-        console.log(cookieVal.username);
-        $("#mymsg").html("hello "+cookieVal.username);
+
+        $("#mymsg").html("hello "+cookieVal);
         $.ajax({
             url:"http://localhost:62009/api/posts",
             method: 'GET',
@@ -29,7 +34,7 @@ $(document).ready(function(){
                         </td>
                     </tr>
                     `;
-                   if(data[i].CreatedBy==cookieVal.username)
+                   if(data[i].CreatedBy==cookieVal)
                    {
                         console.log('here');
                         posts+=`<tr>
@@ -45,7 +50,7 @@ $(document).ready(function(){
                    {
                        posts+=`<tr>
                                   <td><span style="color:blue;">`+data[i].Comments[j].CreatedBy+":-- </span>"+data[i].Comments[j].CommentContent+`</td> `;
-                        if(data[i].Comments[j].CreatedBy==cookieVal.username)
+                        if(data[i].Comments[j].CreatedBy==cookieVal)
                         {
                             posts+=`<td><a href="http://localhost/atp2finaltermassignment/views/editcomment.html?commentId=`+data[i].Comments[j].CommentID+`&postId=`+data[i].PostID+`">Edit Comment </a> | <a href="http://localhost/atp2finaltermassignment/views/deletecomment.html?commentId=`+data[i].Comments[j].CommentID+`&postId=`+data[i].PostID+`"">Delete Comment </a></tr>`;
                         }
@@ -65,11 +70,8 @@ $(document).ready(function(){
                $("#posts").html(posts);
             }
         });
-    }
-    else
-    {
-        window.location.href = "http://localhost/atp2finaltermassignment/views/index.html";
-    }
+    
+    
 
     setTimeout(function(){
 
@@ -84,7 +86,7 @@ $(document).ready(function(){
                 data:{
                     "CommentContent":$("#"+this.id).val(),
                     "CreatedAt":date,
-                    "CreatedBy":cookieVal.username,
+                    "CreatedBy":cookieVal,
                     "PostID":this.id
                 },
                 success: function(res){

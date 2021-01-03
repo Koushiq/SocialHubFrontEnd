@@ -21,11 +21,8 @@ $(document).ready(function(){
                 success: function(res) {
                    if(res!=undefined)
                    {
-                       let cookieVal = {
-                           username:User.username
-                       }
-                        document.cookie = JSON.stringify(cookieVal);
-                        window.location.href = "http://localhost/atp2finaltermassignment/views/home.html";
+                       setCookie(User.username,10);
+                       window.location.href = "http://localhost/atp2finaltermassignment/views/home.html";
                    }
                    else
                    {
@@ -40,24 +37,9 @@ $(document).ready(function(){
             $("#passwordErr").html(res.passwordErr);
             console.log("error invalid request");
         }
-        /* $.ajax({
-            url:"http://localhost:62009/api/users",
-            method: 'POST',
-            data:{
-                "Username":User.username,
-                "Password":User.password
-            },
-            success: function(data) {
-                console.log("success ", data);
-            },
-            failure: function(data) {
-                console.log("failed ",data);
-            },
-        }); */
     });
-   
-
 });
+   
 
 function validate(User)
 {

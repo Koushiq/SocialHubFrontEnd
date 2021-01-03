@@ -1,4 +1,4 @@
-const cookieVal=JSON.parse(document.cookie);
+const cookieVal=getCookie();
 if(document.cookie=="")
 {
     window.location.href = "http://localhost/atp2finaltermassignment/views/index.html";

@@ -2,9 +2,9 @@ let date = new Date().toISOString().
   replace(/T/, ' ').      
   replace(/\..+/, '') ;
 
-  const cookieVal=JSON.parse(document.cookie);
+  const cookieVal=getCookie();
 
-  if(document.cookie=="")
+  if(cookieVal=="")
   {
     window.location.href = "http://localhost/atp2finaltermassignment/views/index.html";
   }

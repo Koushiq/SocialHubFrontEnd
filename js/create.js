@@ -4,12 +4,11 @@ let date = new Date().toISOString().
 
 
 $(document).ready(function(){
-    //validate cookie
+    let cookieVal=getCookie();
     console.log(date);
-    if(document.cookie!="")
+    if(cookieVal!="")
     {
-        let cookieVal=JSON.parse(document.cookie);
-        console.log(cookieVal.username);
+        console.log(cookieVal);
         $("form").submit(function(e){
             e.preventDefault();
             let value = $("#postID").val();
@@ -23,16 +22,16 @@ $(document).ready(function(){
                         "PostContent":$("#postID").val(),
                         "PostPic":'',
                         "CreatedAt":date,
-                        "CreatedBy":cookieVal.username,
+                        "CreatedBy":cookieVal,
                     },
                     success: function(res) {
                        if(res!=undefined)
                        {
-                         alert("post created");
+                            alert("post created");
                        }
                        else
                        {
-                            alert("not created")
+                            alert("not created");
                        }
                     }
                 }); 
@@ -42,7 +41,6 @@ $(document).ready(function(){
                 alert("can not submit empty post ");
             }
         });
-       
     }
     else
     {

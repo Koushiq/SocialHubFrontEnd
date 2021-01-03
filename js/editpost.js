@@ -1,8 +1,8 @@
 let date = new Date().toISOString().
   replace(/T/, ' ').      
   replace(/\..+/, '') ;
-  const cookieVal=JSON.parse(document.cookie);
-if(document.cookie=="")
+  const cookieVal=getCookie();
+if(cookieVal=="")
 {
     window.location.href = "http://localhost/atp2finaltermassignment/views/index.html";
 }
@@ -50,7 +50,7 @@ $(document).ready(function(){
                     data:{
                         "PostContent": $("#postID").val(),
                         "CreatedAt":date,
-                        "CreatedBy":cookieVal.username
+                        "CreatedBy":cookieVal
                     },
                     success: function(res) {
                         alert('updated');

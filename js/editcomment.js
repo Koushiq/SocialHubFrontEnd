@@ -2,12 +2,12 @@ let date = new Date().toISOString().
   replace(/T/, ' ').      
   replace(/\..+/, '') ;
 
-  const cookieVal=JSON.parse(document.cookie);
-  if(document.cookie=="")
+  const cookieVal=getCookie();
+  if(cookieVal=="")
   {
       window.location.href = "http://localhost/atp2finaltermassignment/views/index.html";
   }
-
+  
   $(document).ready(function(){
 
     var getUrlParameter = function getUrlParameter(sParam) {
@@ -53,7 +53,7 @@ let date = new Date().toISOString().
                     data:{
                         "CommentContent":$("#comment").val(),
                         "CreatedAt":date,
-                        "CreatedBy":cookieVal.username,
+                        "CreatedBy":cookieVal,
                         "PostID":postId,
                     },
                     success:function(res){
@@ -68,8 +68,6 @@ let date = new Date().toISOString().
             {
                 alert('can not be empty');
             }
-           
-
-        })
+        });
 
   });
